@@ -1,0 +1,9 @@
+{
+  "name": "ispan_javascript_nodejs-web-app",
+  "version": "0.0.0",
+  "description": "Ispan_javascript_NodejsWebApp",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
