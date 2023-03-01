@@ -1,0 +1,47 @@
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+header {
+    border: 3px dashed blue;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btnRestart {
+    background-color: blue;
+    color: white;
+}
+
+.container {
+    border: 3px dashed red;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    height: 100px;
+}
+
+.GetResultHearder {
+    color: red;
+    display: flex;
+    justify-content: center;
+}
+
+.btnGetResult {
+    background-color: red;
+}
+
+.GetResultBody {
+    display: flex;
+    justify-content: center;
+}
+
+.RealAnswer {
+    display: flex;
+    justify-content: center;
+}
+
+.btnHideAnswer {
+    background-color: #31D2F2;
+}
