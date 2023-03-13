@@ -33,6 +33,7 @@ function restart() {
             answer.push(num);
         }
     }
+    console.log(`restart answer:${answer.ToString()}`)
 }
 
 // 當玩家按下「提交」按鈕時執行的函式

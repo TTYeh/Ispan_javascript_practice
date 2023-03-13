@@ -8,7 +8,7 @@
     <!--<link href="Style.css" rel="stylesheet" type="text/css">-->
     <link rel="stylesheet" href="style.css" >
     <!-- 請載入 script.js 並在此執行 -->
-    <script src="script.js"></script>
+    <!--<script src="script.js"></script>-->
     <style>
 
 
@@ -19,77 +19,19 @@
     <header>
         <button class="btnRestart" onclick="restart()">重啟遊戲</button>
     </header>
-    <h3>玩家擬猜的數字</h3>
+    <h3>玩家0~9猜5個不重複數字</h3>
     <div class="container">
         <div class="st1" id="selectItem_1">
-            <select size="1">
-                <option value="1" selected>1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
-        </div>
-        <div class="st1">
-            <select size="1">
-                <option value="1">1</option>
-                <option value="2" selected>2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
-        </div>
-        <div class="st1">
-            <select size="1">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
-        </div>
-        <div class="st1">
-            <select size="1">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4" selected>4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
-        </div>
-        <div class="st1,val5">
-            <select size="1">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5" selected>5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
+            <input type="text" value="1" id= "input1"/>
+            <input type="text" value="2" id= "input2"/>
+            <input type="text" value="3" id= "input3"/>
+            <input type="text" value="4" id= "input4"/>
+            <input type="text" value="5" id= "input5"/>
         </div>
     </div>
 
     <div class="GetResultHearder">
-        <button class="btnGetResult">檢視猜測結果</button>
+        <button class="btnGetResult" onclick="submit()">檢視猜測結果</button>
     </div>
     <div class="GetResultBody">
         <p class="GetResultEachElement">您猜對的數字計有:</p>
@@ -101,7 +43,65 @@
     </div>
 
     <script>
+        let answer = [];
+        let guess = [];
+        let tries = 0;
+        function restart() {
+            // 初始化選單選項
+            answer = [];
+            tries = 0;
+            //document.getElementById("input1").innerHTML = "";
+            document.getElementById("input1").value = "";
+            document.getElementById("input2").value = "";
+            document.getElementById("input3").value = "";
+            document.getElementById("input4").value = "";
+            document.getElementById("input5").value = "";
+            //document.getElementById("input1").focus();
+            //document.getElementById("restart-btn").style.display = "none";
+            //document.getElementById("submit-btn").style.display = "inline-block";
+            while (answer.length < 5) {
+                let num = Math.floor(Math.random() * 10);
+                if (!answer.includes(num)) {
+                    answer.push(num);
+                }
+            }
+            console.log(`restart answer:${answer}`)
+        }
+        // 當玩家按下「提交」按鈕時執行的函式
+        function submit() {
+            // TODO欠缺檢查數值格式
+            let input = [];
+            guess.push(document.getElementById("input1").value);
+            guess.push(document.getElementById("input2").value);
+            guess.push(document.getElementById("input3").value);
+            guess.push(document.getElementById("input4").value);
+            guess.push(document.getElementById("input5").value);
 
+            // 檢查輸入是否為五位不同的數字
+            if (input.length !== 5) {
+                alert("請輸入五個不同的數字！");
+                return;
+            }
+            for (let i = 0; i < 5; i++) {
+                if (isNaN(input[i]) || guess.includes(parseInt(input[i]))) {
+                    alert("請輸入五個不同的數字！");
+                    return;
+                }
+            }
+            guess = input.split("").map(num => parseInt(num));
+            tries++;
+            let result = checkGuess();
+            document.getElementById("guesses").innerHTML += `<div>${guess.join("")} - ${result}</div>`;
+            // 如果猜中全部數字，顯示恭喜訊息和重新開始按鈕
+            if (result === "5A0B") {
+                alert(`恭喜你猜中了！你總共嘗試了${tries}次。`);
+                document.getElementById("restart-btn").style.display = "inline-block";
+                document.getElementById("submit-btn").style.display = "none";
+            } else {
+                document.getElementById("input").value = "";
+                document.getElementById("input").focus();
+            }
+        }
 
     </script>
 

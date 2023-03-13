@@ -4,3 +4,6 @@ C:\Users\User\Documents\Github\Ispan_javascript_practice\Ispan_javascript_Nodejs
 C:\Users\User\Documents\Github\Ispan_javascript_practice\hw\Ispan_javascript_NodejsWebApp\obj\Debug\Ispan_javascript_NodejsWebApp.njsproj.AssemblyReference.cache
 C:\Users\User\Documents\Github\Ispan_javascript_practice\hw\Ispan_javascript_NodejsWebApp\obj\Debug\Ispan_javascript_NodejsWebApp.njsproj.CoreCompileInputs.cache
 C:\Users\User\Documents\Github\Ispan_javascript_practice\hw\Ispan_javascript_NodejsWebApp\bin\Microsoft.NodejsTools.WebRole.dll
+C:\Users\TTyeh\Documents\GitHub\Ispan_javascript_practice\hw\Ispan_javascript_NodejsWebApp\obj\Debug\Ispan_javascript_NodejsWebApp.njsproj.AssemblyReference.cache
+C:\Users\TTyeh\Documents\GitHub\Ispan_javascript_practice\hw\Ispan_javascript_NodejsWebApp\obj\Debug\Ispan_javascript_NodejsWebApp.njsproj.CoreCompileInputs.cache
+C:\Users\TTyeh\Documents\GitHub\Ispan_javascript_practice\hw\Ispan_javascript_NodejsWebApp\bin\Microsoft.NodejsTools.WebRole.dll
