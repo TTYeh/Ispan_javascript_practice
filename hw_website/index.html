@@ -9,29 +9,99 @@
     <link rel="stylesheet" href="style.css" >
     <!-- 請載入 script.js 並在此執行 -->
     <!--<script src="script.js"></script>-->
-    <style>
+    <script src="javascripts/jquery-3.6.1.js"></script>
+    <script src="javascripts/jquery-3.6.1.min.js"></script>
+    <script src="javascripts/jquery-ui.min.js"></script>
+    <link href="stylesheets/jquery-ui/base/jquery-ui.css" rel="stylesheet" />
+    <script>
 
+        $(function () {
+            // 初始化
+            $(document).ready(function () {
+                //動態新增<input>元素
+                var inputLabels = ['猜測數值1', '猜測數值2', '猜測數值3', '猜測數值4', '猜測數值5'];
+                $.each(inputLabels, function (index, value) {
+                    var s = `<p><label>${value} <input type="number" id="userInput${index + 1}"  min="0" max="9" value="${index}" step="1"></p>`;
+                    $("#context1 .container").append(s);
+                });
+            });
 
-    </style>
+            //$(".container input").blur(function () {
+            //    // 當使用者輸入完成後觸發 change 事件
+            //    // 確認數值是否是空值(用不到寫開心的)
+            //    if ($(this).val().trim() === "") {
+            //        alert("請輸入數值");
+            //        $(this).val(0);
+            //        return;
+            //    }
+            //});
+            $("#btnSubmit").click(function () {
+                // 檢查每個input
+                $("#context1 .container input").each(function (index, value) {
+                    var value = $(this).val();
+                    if (value < 0 || value > 9) {
+                        alert("其中有數值不是0-9");
+                        return; 0
+                    }
+                    console.log(`${value}`)
+                    console.log(`hi`)
+                });
+                    //// 確認數值是否是數值(用不到寫開心的)
+                    //if (typeof $("this").val().trim() !== ('number' && isFinite(value))) {
+                    //    alert("其中有數值不是0-9");
+                    //    $(this).val(0);
+                    //    return;
+                    //}
+                    //// 確認數值是否是0-9
+                    //if ($("#input1").val().trim() < 0 || $("#input1").val().trim() > 9) {
+                    //    alert("數值不是0-9");
+                    //    $(this).val(0);
+                    //    return;
+                    //}
+                    //// 確認數值是否有5個
+                    //let input = [];
+                    //input.push($("#input1").val().trim());
+                    //input.push($("#input2").val().trim());
+                    //input.push($("#input3").val().trim());
+                    //input.push($("#input4").val().trim());
+                    //input.push($("#input5").val().trim());
+                    //if (input.length != 5)
+                    //{
+                    //    alert("沒有選取五個數值" + input.join(","));
+                    //    return;
+                    //}
+                    //// 確認數值5個是否不重覆 
+                    //uniq = [...new Set(input)];
+                    //if (uniq.length != 5) {
+                    //    alert("數值有重覆" + input.join(","));
+                    //    return;
+                    //}
+                }
+            );
+
+          
+        });
+    </script>
 </head>
 <body>
     <h1 class="title">猜數字遊戲</h1>
     <header>
         <button class="btnRestart" onclick="restart()">重啟遊戲</button>
     </header>
-    <h3>玩家0~9猜5個不重複數字</h3>
-    <div class="container">
-        <div class="st1" id="selectItem_1">
-            <input type="text" value="1" id= "input1"/>
-            <input type="text" value="2" id= "input2"/>
-            <input type="text" value="3" id= "input3"/>
-            <input type="text" value="4" id= "input4"/>
-            <input type="text" value="5" id= "input5"/>
+    <h3>玩家從0~9猜5個不重複數字</h3>
+    <div id="context1">
+        <div class="container ">
+            <!--<input type="number" id="input1" name="input1" min="0" max="9" value="1" step="1">
+            <input type="number" id="input2" name="input2" min="0" max="9" value="2" step="1">
+            <input type="number" id="input3" name="input3" min="0" max="9" value="3" step="1">
+            <input type="number" id="input4" name="input4" min="0" max="9" value="4" step="1">
+            <input type="number" id="input5" name="input5" min="0" max="9" value="5" step="1">-->
         </div>
     </div>
 
+
     <div class="GetResultHearder">
-        <button class="btnGetResult" onclick="submit()">檢視猜測結果</button>
+        <button class="btnGetResult" id="btnSubmit">檢視猜測結果</button>
     </div>
     <div class="GetResultBody">
         <p class="GetResultEachElement">您猜對的數字計有:</p>
@@ -76,31 +146,33 @@
             guess.push(document.getElementById("input3").value);
             guess.push(document.getElementById("input4").value);
             guess.push(document.getElementById("input5").value);
+            console.log(guess);
 
-            // 檢查輸入是否為五位不同的數字
-            if (input.length !== 5) {
-                alert("請輸入五個不同的數字！");
-                return;
-            }
-            for (let i = 0; i < 5; i++) {
-                if (isNaN(input[i]) || guess.includes(parseInt(input[i]))) {
-                    alert("請輸入五個不同的數字！");
-                    return;
-                }
-            }
-            guess = input.split("").map(num => parseInt(num));
-            tries++;
-            let result = checkGuess();
-            document.getElementById("guesses").innerHTML += `<div>${guess.join("")} - ${result}</div>`;
-            // 如果猜中全部數字，顯示恭喜訊息和重新開始按鈕
-            if (result === "5A0B") {
-                alert(`恭喜你猜中了！你總共嘗試了${tries}次。`);
-                document.getElementById("restart-btn").style.display = "inline-block";
-                document.getElementById("submit-btn").style.display = "none";
-            } else {
-                document.getElementById("input").value = "";
-                document.getElementById("input").focus();
-            }
+            //// 檢查輸入是否為五位不同的數字
+            //if (input.length !== 5) {
+            //    alert("請輸入五個不同的數字！");
+            //    return;
+            //}
+            //for (let i = 0; i < 5; i++) {
+            //    if (isNaN(input[i]) || guess.includes(parseInt(input[i]))) {
+            //        alert("請輸入五個不同的數字！");
+            //        return;
+            //    }
+            //}
+            //guess = input.split("").map(num => parseInt(num));
+            //tries++;
+            //let result = checkGuess();
+            //document.getElementById("guesses").innerHTML += `<div>${guess.join("")} - ${result}</div>`;
+            //// 如果猜中全部數字，顯示恭喜訊息和重新開始按鈕
+            //if (result === "5A0B") {
+            //    alert(`恭喜你猜中了！你總共嘗試了${tries}次。`);
+            //    document.getElementById("restart-btn").style.display = "inline-block";
+            //    document.getElementById("submit-btn").style.display = "none";
+            //} else {
+            //    document.getElementById("input").value = "";
+            //    document.getElementById("input").focus();
+            //}
+
         }
 
     </script>
