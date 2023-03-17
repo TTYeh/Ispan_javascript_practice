@@ -20,43 +20,50 @@
     <script src="javascripts/jquery-ui.min.js"></script>
     <link href="stylesheets/jquery-ui/base/jquery-ui.css" rel="stylesheet" />-->
     <style>
+        header {
+            background-color: rgb(232,144,122,10);
+        }
         .title {
+            background-color: rgb(232,144,122,10);
             display: flex;
             justify-content: center;
         }
 
-        header {
+        .titleBtn {
             display: flex;
             justify-content: flex-end;
         }
 
-        .btnRestart {
-            background-color: blue;
-            color: white;
+        content {
+            background-color: wheat;
         }
-
+        footer {
+            background-color: wheat;
+        }
         #context1 {
-            border: red dashed;
+            background-color: wheat;
             display: flex;
             justify-content: center;
-            margin: 30px 0;
             height: 300px;
             flex-direction: column;
             /*padding:0 35%;*/
         }
 
         .GetResultHearder {
+            background-color: wheat;
             color: red;
             display: flex;
             justify-content: center;
         }
 
         .GetResultBody {
+            background-color: wheat;
             display: flex;
             justify-content: center;
         }
 
         .RealAnswer {
+            background-color: wheat;
             display: flex;
             justify-content: center;
         }
@@ -214,36 +221,39 @@
     </script>
 </head>
 <body>
-    <h1 class="title">猜數字遊戲</h1>
-    <header>
-        <button type="button" class="btn btn-primary btnRestart" id="restart">重啟遊戲</button>
-    </header>
     
-    <div id="context1" >
-        <div class="container card-body">
-            <h3 class="card-title">玩家從0~9猜5個不重複數字</h3>
-            <!--<input type="number" id="input1" name="input1" min="0" max="9" value="1" step="1">
-            <input type="number" id="input2" name="input2" min="0" max="9" value="2" step="1">
-            <input type="number" id="input3" name="input3" min="0" max="9" value="3" step="1">
-            <input type="number" id="input4" name="input4" min="0" max="9" value="4" step="1">
-            <input type="number" id="input5" name="input5" min="0" max="9" value="5" step="1">-->
+    <header>
+        <div class="webTitle">
+            <h1 class="title">猜數字遊戲</h1>
         </div>
-    </div>
+        <div class="titleBtn">
+            <button type="button" class="btn btn-primary btnRestart" id="restart">重啟遊戲</button>
+        </div>
+    </header>
+    <content>
+        <div id="context1">
+            <div class="container card-body">
+                <h3 class="card-title">玩家從0~9猜5個不重複數字</h3>
+                <!--<input type="number" id="input1" name="input1" min="0" max="9" value="1" step="1">
+                <input type="number" id="input2" name="input2" min="0" max="9" value="2" step="1">
+                <input type="number" id="input3" name="input3" min="0" max="9" value="3" step="1">
+                <input type="number" id="input4" name="input4" min="0" max="9" value="4" step="1">
+                <input type="number" id="input5" name="input5" min="0" max="9" value="5" step="1">-->
+            </div>
+        </div>
 
-    <div class="GetResultHearder">
-        <button type="button" class="btn btn-primary " id="btnSubmit">檢視猜測結果</button>
-    </div>
-    <div class="GetResultBody">
-        <p class="GetResultEachElement" id="dispGuess">您猜對的數字計有: ? 總計N個</p>
-    </div>
-    <div class="RealAnswer">
-        <button class="btn btn-warning" id="btnHideAnswer">隱藏/顯示莊家的數字</button>
-        <label id="dispAns">莊家的數字</label>
-    </div>
+        <div class="GetResultHearder">
+            <button type="button" class="btn btn-primary " id="btnSubmit">檢視猜測結果</button>
+        </div>
+        <div class="GetResultBody">
+            <p class="GetResultEachElement" id="dispGuess">您猜對的數字計有: ? 總計N個</p>
+        </div>
+        <div class="RealAnswer">
+            <button class="btn btn-warning" id="btnHideAnswer">隱藏/顯示莊家的數字</button>
+            <label id="dispAns">莊家的數字</label>
+        </div>
+    </content>
 
-    <script>
-            // NO JS HERE
-    </script>
 
 </body>
 </html>
