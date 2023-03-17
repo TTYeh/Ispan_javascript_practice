@@ -36,7 +36,7 @@
             // 當使用者輸入完成後觸發
             $("#context1 .container input").blur(function () {
                 uval = parseInt($(this).val().trim());
-                console.log(`觸發成功${uval}`);
+                //console.log(`觸發成功${uval}`);
                 //// 確認數值是否是數值(用不到寫開心的)
                 if (isNaN(uval) === true) {
                     alert("您輸入的不是數值");
@@ -122,7 +122,7 @@
                 } else {
                     user_try_counties += 1;
                     alert(`答錯了，你目前的嘗試次數: ${user_try_counties}`);
-                    console.log(`猜對的數值${currentArr}`);
+                    //console.log(`猜對的數值${currentArr}`);
                     document.getElementById("dispGuess").innerHTML = `您猜對的數字是: ${currentArr} 總計${currentArr.length}個`;
                 }
             }
@@ -151,7 +151,7 @@
                     }
                 }
                 answer.sort();
-                console.log(`restart成功: ${answer}`);
+                //console.log(`restart成功: ${answer}`);
             }
             });
         });
