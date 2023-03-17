@@ -4,7 +4,6 @@
 }
 
 header {
-    /*border: 3px dashed blue;*/
     display: flex;
     justify-content: flex-end;
 }
@@ -15,7 +14,6 @@ header {
 }
 
 .container {
-    /*border: 3px dashed red;*/
     display: flex;
     justify-content: center;
     margin: 30px 0;

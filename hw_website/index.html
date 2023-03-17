@@ -6,7 +6,7 @@
     <title>JavaScript家庭作業</title>
     <!-- 請參考 style.css 文件來渲染畫面 -->
     <!--<link href="Style.css" rel="stylesheet" type="text/css">-->
-    <link rel="stylesheet" href="style.css" >
+    <link href="style.css" rel="stylesheet" />
     <!-- 請載入 script.js 並在此執行 -->
     <!--<script src="script.js"></script>-->
     <script src="javascripts/jquery-3.6.1.js"></script>
@@ -14,9 +14,10 @@
     <script src="javascripts/jquery-ui.min.js"></script>
     <link href="stylesheets/jquery-ui/base/jquery-ui.css" rel="stylesheet" />
     <script>
-        let answer = [];
-        let inputArr = [];
-        let user_try_counties = 0;
+        let answer = []; // 答案陣列
+        let inputArr = []; // 使用者輸入的陣列
+        let user_try_counties = 0; // 猜測次數
+        let guessNum = 5; // 猜幾個數字
         $(function () {
             // 初始化
             $(document).ready(function () {
@@ -26,88 +27,123 @@
                     var s = `<p><label>${value} <input type="number" id="userInput${index + 1}"  min="0" max="9" value="${index}" step="1"></p>`;
                     $("#context1 .container").append(s);
 
-                    // 產生答案
-                    //restartSucess(); 
+                // 產生答案
+                restartSucess(); 
+                // 隱藏答案
+                $("#dispAns").toggle();
             });
 
-            // 輸入後檢查數值是否正確
-            
-            $(".container input").blur(function () {
-                //console.log("觸發成功");
-                //// 當使用者輸入完成後觸發 change 事件
+            // 當使用者輸入完成後觸發
+            $("#context1 .container input").blur(function () {
+                uval = parseInt($(this).val().trim());
+                console.log(`觸發成功${uval}`);
                 //// 確認數值是否是數值(用不到寫開心的)
-                //if (typeof $("this").val().trim() !== ('number' && isFinite(value))) {
-                //    alert("您輸入的不是數值");
-                //    $(this).val(0);
-                //    return;
-                //}
+                if (isNaN(uval) === true) {
+                    alert("您輸入的不是數值");
+                    $(this).val(0);
+                    return;
+                }
                 //// 確認數值是否是空值(用不到寫開心的)
-                //if ($(this).val().trim() === "") {
-                //    alert("您尚未輸入成功");
-                //    $(this).val(0);
-                //    return;
-                //}
+                if ($(this).val().trim() === "") {
+                    alert("您尚未輸入成功");
+                    $(this).val(0);
+                    return;
+                }
                 //// 確認數值是否在0-9之間
-                //if ($(this).val() > 9) {
-                //    alert("數值超過9了");
-                //    $(this).val(9);
-                //    return;
-                //}
+                if (uval > 9) {
+                    alert("數值超過9了");
+                    $(this).val(9);
+                    return;
+                }
                 //// 確認數值是否在0-9之間
-                //if ($(this).val() < 0) {
-                //    alert("數值小於0了");
-                //    $(this).val(0);
-                //    return;
-                //}
+                if (uval < 0) {
+                    alert("數值小於0了");
+                    $(this).val(0);
+                    return;
+                }
             });
+
+            // 重新開始遊戲
             $("#restart").click(function () {
                 restartSucess(); 
             });
-            
+
+            // 送出答案
             $("#btnSubmit").click(function () {
                 // 清空陣列
                 inputArr = [];
+                
                 // 檢查每個input
                 $("#context1 .container input").each(function (index, value) {
                     // 確認數值是否是數值(用不到寫開心的)
-                    var value = $(this).val();
+                    var value = parseInt($(this).val());
                     if (value < 0 || value > 9) {
                         alert("其中有數值不是0-9");
                         return; 0
                     }
-                    // 沒有重覆就加入陣列
-                    if (inputArr.indexOf($(this).val()) == -1) {
-                        inputArr.push($(this).val());
-                    } else {
-                        alert("輸入數值重覆了");
-                    }
+                    // 加入陣列
+                    inputArr.push(value);
                 });
-                var isAns = arraysEqual(answer, inputArr);
-                if (isAns) {
-                    alert("恭喜答對了");
+
+                // 檢查是否有重覆的數值
+                if (inputArr.length === new Set(inputArr).size) {
+                    // 檢查是否答對
+                    calAns();
+                } else {
+                    alert("輸入數值重覆了，請重新輸入");
+                    $("#context1 .container input").each(function (index, value) {
+                        $(this).val() = index;
+                    });
+                }
+            });
+
+            // 顯示答案
+             $("#btnHideAnswer").click(function () {
+                $("#dispAns").toggle();
+                document.getElementById("dispAns").innerHTML = `莊家的數字: ${answer}`;
+            });
+
+            /// 確認答案
+            function checkAnswer(ans, input) {
+                if (ans === input) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            /// 檢查是否答對
+             function calAns() {
+                 answer.sort();
+                 inputArr.sort();
+                 var currentArr = checkCurrent(answer, inputArr);
+                 if (currentArr.length === 5) {
+                    alert(`恭喜答對了，你目前的嘗試次數: ${user_try_counties}`);
                 } else {
                     user_try_counties += 1;
                     alert(`答錯了，你目前的嘗試次數: ${user_try_counties}`);
-                    
+                    console.log(`猜對的數值${currentArr}`);
+                    document.getElementById("dispGuess").innerHTML = `您猜對的數字是: ${currentArr} 總計${currentArr.length}個`;
                 }
-                console.log(`myInput:${inputArr}`);
-            });
-            
-            $("#btnHideAnswer").click(function () {
-                alert(`答案是: ${answer}`);
-            });
-            
-            /// 比對陣列是否相同
-            function arraysEqual(a, b) {
-                if (a === b) return true;
-                if (a == null || b == null) return false;
-                if (a.length !== b.length) return false;
-
-                return true;
             }
+                
+            /// 比對陣列是否相同
+            function checkCurrent(ans, input) {
+                currentArr = []
+                for (let i = 0; i < ans.length; i++) {
+                    if (ans.indexOf(input[i]) !== -1) {
+                        currentArr.push(input[i]);
+                    }
+                }
+                return currentArr;
+            }
+
             
             function restartSucess() {
                 // 檢查每個input
+                answer = [];
+                user_try_counties = 0;
+                inputArr = [];
                 while (answer.length < 5) {
                     let num = Math.floor(Math.random() * 10);
                     if (!answer.includes(num)) {
@@ -142,56 +178,15 @@
         <button class="btnGetResult" id="btnSubmit">檢視猜測結果</button>
     </div>
     <div class="GetResultBody">
-        <p class="GetResultEachElement" id="displayAns">您猜對的數字計有:</p>
-        <p class="GetResultTotal">總計N個</p>
+        <p class="GetResultEachElement" id="dispGuess">您猜對的數字計有: ? 總計N個</p>
     </div>
     <div class="RealAnswer">
         <button id="btnHideAnswer">隱藏莊家的數字</button>
-        <label id="">莊家的數字</label>
+        <label id="dispAns">莊家的數字</label>
     </div>
 
     <script>
-        let guess = [];
-        let tries = 0;
-
-        // 當玩家按下「提交」按鈕時執行的函式
-        function submit() {
-            // TODO欠缺檢查數值格式
-            let input = [];
-            guess.push(document.getElementById("input1").value);
-            guess.push(document.getElementById("input2").value);
-            guess.push(document.getElementById("input3").value);
-            guess.push(document.getElementById("input4").value);
-            guess.push(document.getElementById("input5").value);
-            console.log(guess);
-
-            //// 檢查輸入是否為五位不同的數字
-            //if (input.length !== 5) {
-            //    alert("請輸入五個不同的數字！");
-            //    return;
-            //}
-            //for (let i = 0; i < 5; i++) {
-            //    if (isNaN(input[i]) || guess.includes(parseInt(input[i]))) {
-            //        alert("請輸入五個不同的數字！");
-            //        return;
-            //    }
-            //}
-            //guess = input.split("").map(num => parseInt(num));
-            //tries++;
-            //let result = checkGuess();
-            //document.getElementById("guesses").innerHTML += `<div>${guess.join("")} - ${result}</div>`;
-            //// 如果猜中全部數字，顯示恭喜訊息和重新開始按鈕
-            //if (result === "5A0B") {
-            //    alert(`恭喜你猜中了！你總共嘗試了${tries}次。`);
-            //    document.getElementById("restart-btn").style.display = "inline-block";
-            //    document.getElementById("submit-btn").style.display = "none";
-            //} else {
-            //    document.getElementById("input").value = "";
-            //    document.getElementById("input").focus();
-            //}
-
-        }
-
+        // NO JS HERE
     </script>
 
 </body>
